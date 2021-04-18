@@ -9,13 +9,14 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="ILikeFrog",
-    version="0.0.1",
+    version="0.0.2",
     author="Drakovek",
     author_email="DrakovekMail@gmail.com",
     description="Utility for converting to and from Frog-Talk",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/Drakovek/ILikeFrog",
+    packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",

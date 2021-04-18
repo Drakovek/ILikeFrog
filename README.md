@@ -3,7 +3,7 @@
 A utility for converting between English and Frog-Talk
 
 # Instalation
-ILikeFrog can be installed from its PyPI package using pip:
+ILikeFrog can be installed from its [PyPI package](https://pypi.org/project/ILikeFrog/) using pip:
 
     pip install ilikefrog
 
@@ -19,12 +19,12 @@ Otherwise the program will convert from English to Frog-Talk.
 
 # Examples
 
-    ilikefrog "Yay frog!"
+    $ ilikefrog "Yay frog!"
 
     > FROG TALK:
     LikeIIFrogFrogLikeILikeFrogLikeLikeLikeLikeLikeLikeILikeILikeFrogLikeIFrogLikeILikeLikeIFrogILikeLikeILikeILikeIFrogLikeLikeILikeIFrogI
 
-    ilikefrog -e "IFrogLikeFrogLikeLikeLikeIFrogILikeLikeILikeILikeIFrogLikeLikeLikeIFrogLikeLikeLikeLikeLikeLikeLike"
+    $ ilikefrog -e "IFrogLikeFrogLikeLikeLikeIFrogILikeLikeILikeILikeIFrogLikeLikeLikeIFrogLikeLikeLikeLikeLikeLikeLike"
 
     > ENGLISH:
     Froggy
