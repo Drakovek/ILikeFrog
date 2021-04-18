@@ -1,7 +1,9 @@
 from i_like_frog.main.ilikefrog import decimal_to_ternary
 from i_like_frog.main.ilikefrog import english_to_frog
+from i_like_frog.main.ilikefrog import english_to_simple_frog
 from i_like_frog.main.ilikefrog import frog_to_english
 from i_like_frog.main.ilikefrog import pad_num
+from i_like_frog.main.ilikefrog import simple_frog_to_english
 from i_like_frog.main.ilikefrog import ternary_to_decimal
 
 def test_pad_num():
@@ -81,3 +83,35 @@ def test_frog_to_english():
     assert frog_to_english(None) == None
     assert frog_to_english("Its Not Frog-Talk!") == None
     assert frog_to_english("FrogFrog") == None
+
+def test_english_to_simple_frog():
+    """
+    Tests the english_to_simple_frog function.
+    """
+    # Test converting text to simplified Frog-Talk
+    frog = "IIFrogIILikeILikeLikeIIFrogIIILikeFrogIIILikeILikeLikeI"\
+           +"LikeLikeILikeIFrogFrogIIILike"
+    assert english_to_simple_frog("Test message....") == frog
+    frog = "FrogILikeILikeFrogIFrogIFrogFrogIFrogFrogIFrogIFrog"
+    assert english_to_simple_frog("Froggy") == frog
+    # Test converting invalid strings
+    assert english_to_simple_frog("") == ""
+    assert english_to_simple_frog("ÄëÎöú") == ""
+    assert english_to_simple_frog(None) == ""
+    assert english_to_simple_frog() == ""
+
+def test_simple_frog_to_english():
+    """
+    Tests the simple_frog_to_english function.
+    """
+    # Test converting simplified Frog-Talk back to standard text
+    frog = "IIFrogIILikeILikeLikeIIFrogIIILikeFrogIIILikeILikeLikeI"\
+           +"LikeLikeILikeIFrogFrogIIILike"
+    assert simple_frog_to_english(frog) == "TEST MESSAGE"
+    frog = "FrogILikeILikeFrogIFrogIFrogFrogIFrogFrogIFrogIFrog"
+    assert simple_frog_to_english(frog) == "FROGGY"
+    # Test converting invalid strings
+    assert simple_frog_to_english("") == ""
+    assert simple_frog_to_english(None) == None
+    assert simple_frog_to_english("Its Not Frog-Talk!") == None
+    assert simple_frog_to_english("FrogFrog") == None

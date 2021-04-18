@@ -9,7 +9,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="ILikeFrog",
-    version="0.0.2",
+    version="0.0.3",
     author="Drakovek",
     author_email="DrakovekMail@gmail.com",
     description="Utility for converting to and from Frog-Talk",

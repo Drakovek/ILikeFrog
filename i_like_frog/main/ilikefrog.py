@@ -2,6 +2,10 @@
 
 from argparse import ArgumentParser
 
+simple_list = [" ", "E", "T", "A", "S", "R", "O", "H", "D",\
+               "N", "L", "U", "C", "P", "B", "M", "V", "K",\
+               "I", "F", "Y", "W", "X", "Q", "G", "J", "Z"]
+
 def pad_num(num:str=None, length:int=0) -> str:
     """
     Pads out a number string with zeros until the desired length.
@@ -133,19 +137,100 @@ def frog_to_english(text:str=None) -> str:
     except:
         return None
 
+def simple_frog_to_english(text:str=None) -> str:
+    """
+    Converts from simplified "Frog-Talk" back to standard text.
+
+    :param text: Given simple Frog-Talk text to convert, defaults to None
+    :type text: str, optional
+    :return: Given text converted from simplified "Frog-Talk" to English
+    :rtype: str
+    """
+    # Return None if given text is invalid
+    if text is None:
+        return None
+    # Convert "Frog-Talk" to string of ternary digits
+    dec_string = ""
+    frog = text.lower()
+    while len(frog) > 0:
+        if frog.startswith("i"):
+            dec_string = dec_string + "0"
+            frog = frog[1:]
+        elif frog.startswith("like"):
+            dec_string = dec_string + "1"
+            frog = frog[4:]
+        elif frog.startswith("frog"):
+            dec_string = dec_string + "2"
+            frog = frog[4:]
+        else:
+            return None
+    # Convert decimal string to English using ref table
+    try:
+        english = ""
+        while len(dec_string) > 0:
+            # Get block of three ternary digits
+            char = dec_string[:3]
+            # Return None if 3 digit block doesn't exist
+            if not len(char) == 3:
+                return None
+            # Return None if ternary number exceeds ref table limit
+            char = ternary_to_decimal(char)
+            if char > 27:
+                return None
+            # Add char from ref table
+            english = english + simple_list[char]
+            dec_string = dec_string[3:]
+        return english
+    except:
+        return None
+
+def english_to_simple_frog(text:str=None) -> str:
+    """
+    Converts given text to simplified "Frog-Talk"
+
+    :param text: Given English text to convert, defaults to None
+    :type text: str, optional
+    :return: Given text converted to simplified "Frog-Talk"
+    :rtype: str
+    """
+    # Return empty string if given text is invalid
+    if text is None:
+        return ""
+    # Run through each character
+    frog = ""
+    english = text.upper()
+    for char_num in range(0, len(english)):
+        # Check if character is in the reference table
+        char = english[char_num]
+        if char in simple_list:
+            char = simple_list.index(char)
+            char = pad_num(decimal_to_ternary(char), 3)
+            frog = frog + str(char)
+    # Convert ternary decimals to frog-speak terms
+    frog = frog.replace("0", "I")
+    frog = frog.replace("1", "Like")
+    frog = frog.replace("2", "Frog")
+    return frog
+
 def main():
     """
     Parses user arguments for converting to/from Frog-Talk.
     """
+    # Create parser arguments
     parser = ArgumentParser()
     parser.add_argument(
         "text",
-        help="Text to convert to/from frog-talk.",
+        help="Text to convert to/from frog-talk",
         type=str)
     parser.add_argument(
         "-e",
         "--english",
-        help="Flag for converting frog-talk back to english.",
+        help="Flag for converting frog-talk back to english",
+        action="store_true")
+    parser.add_argument(
+        "-s",
+        "--simplified",
+        help="Flag for using simplified frog-talk",
         action="store_true")
     args = parser.parse_args()
     text = None
@@ -153,11 +238,15 @@ def main():
     # Convert text
     if args.english:
         # Convert frog-talk to English
-        text = frog_to_english(args.text)
+        text = simple_frog_to_english(args.text)
+        if not args.simplified:
+            text = frog_to_english(args.text)
         print("ENGLISH:")
     else:
         # Convert English to frog-talk
-        text = english_to_frog(args.text)
+        text = english_to_simple_frog(args.text)
+        if not args.simplified:
+            text = english_to_frog(args.text)
         print("FROG TALK:")
     # Print converted text
     if text is None:
